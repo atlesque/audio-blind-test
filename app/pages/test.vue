@@ -13,6 +13,7 @@
           </span>
           <ProgressBar
             :value="progressPercent"
+            :show-value="false"
             class="progress-bar"
           />
         </div>
@@ -35,6 +36,8 @@
                 ref="audioRef"
                 :src="currentAudio.objectUrl"
                 preload="auto"
+                @play="onPlay"
+                @pause="onPause"
                 @timeupdate="onTimeUpdate"
                 @loadedmetadata="onLoadedMetadata"
                 @ended="onEnded"
@@ -161,7 +164,14 @@ function togglePlay() {
   } else {
     audioRef.value.play().catch(() => {})
   }
-  isPlaying.value = !isPlaying.value
+}
+
+function onPlay() {
+  isPlaying.value = true
+}
+
+function onPause() {
+  isPlaying.value = false
 }
 
 function onTimeUpdate() {
@@ -313,6 +323,15 @@ function finishTest() {
 .play-btn {
   width: 4rem;
   height: 4rem;
+  min-width: 4rem;
+  max-width: 4rem;
+  flex: 0 0 4rem;
+  aspect-ratio: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   font-size: 1.5rem;
 }
 
