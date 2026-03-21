@@ -183,7 +183,7 @@ function restartQuiz() {
 }
 
 .results-header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--p-primary-color);
   margin: 0 0 0.5rem;
@@ -191,11 +191,15 @@ function restartQuiz() {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  letter-spacing: 0.04em;
 }
 
 .subtitle {
   color: var(--p-text-muted-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.01em;
   margin: 0;
 }
 

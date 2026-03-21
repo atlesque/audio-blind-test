@@ -1,0 +1,74 @@
+/* ===== Global Typography ===== */
+
+/* Title / Display font: Orbitron — futuristic, geometric, tech */
+/* Body font: Inter — clean, modern, professional developer standard */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Orbitron', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Apply Inter to all PrimeVue components by default */
+.p-component {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Card titles use the display font */
+.p-card-title {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Buttons use Inter for legibility */
+.p-button {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Input fields */
+.p-inputtext {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Chip labels */
+.p-chip-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.875rem;
+}
+
+/* Monospaced time/duration readouts */
+.time-current,
+.track-duration,
+.criteria-score {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}

@@ -254,7 +254,7 @@ function finishTest() {
 }
 
 .test-header h1 {
-  font-size: 2rem;
+  font-size: 1.9rem;
   font-weight: 700;
   color: var(--p-primary-color);
   margin: 0 0 1rem;
@@ -262,6 +262,7 @@ function finishTest() {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  letter-spacing: 0.04em;
 }
 
 .progress-info {

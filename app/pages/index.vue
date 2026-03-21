@@ -235,7 +235,7 @@ function startTest() {
 }
 
 .header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--p-primary-color);
   margin: 0 0 0.5rem;
@@ -243,20 +243,25 @@ function startTest() {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  letter-spacing: 0.04em;
 }
 
 .header h1 .pi {
-  font-size: 2rem;
+  font-size: 1.9rem;
+  font-family: 'primeicons', sans-serif;
 }
 
 .subtitle {
   color: var(--p-text-muted-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.01em;
   margin: 0;
 }
 
 .step-card :deep(.p-card-title) {
-  font-size: 1.1rem;
+  font-size: 0.85rem;
 }
 
 .step-title {
