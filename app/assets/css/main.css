@@ -1,6 +1,6 @@
 /* ===== Global Typography ===== */
 
-/* Title / Display font: Orbitron — futuristic, geometric, tech */
+/* Title / Display font: Space Grotesk — modern, geometric, and softer than Orbitron */
 /* Body font: Inter — clean, modern, professional developer standard */
 
 *,
@@ -26,7 +26,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Orbitron', 'Inter', system-ui, sans-serif;
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -39,7 +39,7 @@ h6 {
 
 /* Card titles use the display font */
 .p-card-title {
-  font-family: 'Orbitron', system-ui, sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.04em;
