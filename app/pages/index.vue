@@ -113,13 +113,24 @@
             v-if="criteria.length > 0"
             class="criteria-list"
           >
-            <Chip
-              v-for="c in criteria"
+            <div
+              v-for="(c, index) in criteria"
               :key="c"
-              :label="c"
-              removable
-              @remove="removeCriteria(c)"
-            />
+              class="criteria-pill"
+              :class="{ 'criteria-pill--dragging': draggedCriteriaIndex === index }"
+              draggable="true"
+              @dragstart="onCriteriaDragStart(index, $event)"
+              @dragover.prevent
+              @dragenter.prevent="onCriteriaDragEnter(index)"
+              @drop.prevent="onCriteriaDrop(index)"
+              @dragend="onCriteriaDragEnd"
+            >
+              <Chip
+                :label="c"
+                removable
+                @remove="removeCriteria(c)"
+              />
+            </div>
           </div>
           <div
             v-else
@@ -199,6 +210,7 @@ const selectedFiles = ref<File[]>([])
 const criteria = ref<string[]>([])
 const newCriteria = ref('')
 const startOffsetSeconds = ref(0)
+const draggedCriteriaIndex = ref<number | null>(null)
 
 function onDrop(event: DragEvent) {
   isDragging.value = false
@@ -239,6 +251,38 @@ function addCriteria() {
 
 function removeCriteria(criteriaToRemove: string) {
   criteria.value = criteria.value.filter((criteria) => criteria !== criteriaToRemove)
+}
+
+function onCriteriaDragStart(index: number, event: DragEvent) {
+  draggedCriteriaIndex.value = index
+  if (event.dataTransfer) {
+    event.dataTransfer.effectAllowed = 'move'
+    event.dataTransfer.setData('text/plain', criteria.value[index] ?? '')
+  }
+}
+
+function onCriteriaDragEnter(targetIndex: number) {
+  const sourceIndex = draggedCriteriaIndex.value
+  if (sourceIndex === null || sourceIndex === targetIndex) return
+
+  const updatedCriteria = [...criteria.value]
+  const [movedCriteria] = updatedCriteria.splice(sourceIndex, 1)
+  if (!movedCriteria) return
+
+  updatedCriteria.splice(targetIndex, 0, movedCriteria)
+  criteria.value = updatedCriteria
+  draggedCriteriaIndex.value = targetIndex
+}
+
+function onCriteriaDrop(targetIndex: number) {
+  if (draggedCriteriaIndex.value !== targetIndex) {
+    onCriteriaDragEnter(targetIndex)
+  }
+  draggedCriteriaIndex.value = null
+}
+
+function onCriteriaDragEnd() {
+  draggedCriteriaIndex.value = null
 }
 
 function startTest() {
@@ -439,6 +483,18 @@ function startTest() {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: 1rem;
+}
+
+.criteria-pill {
+  cursor: grab;
+}
+
+.criteria-pill--dragging {
+  opacity: 0.55;
+}
+
+.criteria-pill :deep(.p-chip) {
+  user-select: none;
 }
 
 .criteria-empty {
