@@ -114,11 +114,11 @@
             class="criteria-list"
           >
             <Chip
-              v-for="(c, index) in criteria"
-              :key="index"
+              v-for="c in criteria"
+              :key="c"
               :label="c"
               removable
-              @remove="removeCriteria(index)"
+              @remove="removeCriteria(c)"
             />
           </div>
           <div
@@ -201,8 +201,8 @@ function addCriteria() {
   newCriteria.value = ''
 }
 
-function removeCriteria(index: number) {
-  criteria.value.splice(index, 1)
+function removeCriteria(criteriaToRemove: string) {
+  criteria.value = criteria.value.filter((criteria) => criteria !== criteriaToRemove)
 }
 
 function startTest() {
