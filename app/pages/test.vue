@@ -27,7 +27,6 @@
         <template #content>
           <div class="player-content">
             <div class="track-badge">
-              <i class="pi pi-music" />
               <span>Track {{ store.currentIndex + 1 }}</span>
             </div>
 
@@ -382,19 +381,21 @@ function finishTest() {
   gap: 0.75rem;
 }
 
-.play-btn {
-  width: 4rem;
-  height: 4rem;
-  min-width: 4rem;
-  max-width: 4rem;
-  flex: 0 0 4rem;
+:deep(.play-btn.p-button) {
+  width: 3.25rem;
+  height: 3.25rem;
+  min-width: 3.25rem;
+  max-width: 3.25rem;
+  flex: 0 0 3.25rem;
   aspect-ratio: 1;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  font-size: 1.5rem;
+  line-height: 1;
+  font-size: 1.25rem;
+  overflow: hidden;
 }
 
 .skip-btn {
