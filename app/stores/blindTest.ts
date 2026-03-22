@@ -21,6 +21,7 @@ export const useBlindTestStore = defineStore('blindTest', {
   state: () => ({
     audioFiles: [] as AudioFile[],
     criteria: [] as string[],
+    startOffsetSeconds: 0,
     ratings: {} as AudioRatings,
     currentIndex: 0,
     testStarted: false,
@@ -90,6 +91,10 @@ export const useBlindTestStore = defineStore('blindTest', {
       this.criteria = criteria.filter((c) => c.trim() !== '')
     },
 
+    setStartOffset(seconds: number) {
+      this.startOffsetSeconds = Math.max(0, seconds)
+    },
+
     setDuration(audioId: string, duration: number) {
       const audio = this.audioFiles.find((a) => a.id === audioId)
       if (audio) audio.duration = duration
@@ -135,6 +140,7 @@ export const useBlindTestStore = defineStore('blindTest', {
       }
       this.audioFiles = []
       this.criteria = []
+      this.startOffsetSeconds = 0
       this.ratings = {}
       this.currentIndex = 0
       this.testStarted = false

@@ -43,15 +43,47 @@
                 @ended="onEnded"
               />
 
-              <!-- Play/Pause -->
-              <Button
-                :icon="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
-                :aria-label="isPlaying ? 'Pause' : 'Play'"
-                rounded
-                size="large"
-                class="play-btn"
-                @click="togglePlay"
-              />
+              <div class="transport-controls">
+                <Button
+                  label="-15s"
+                  severity="secondary"
+                  outlined
+                  class="skip-btn"
+                  @click="skipBy(-15)"
+                />
+                <Button
+                  label="-5s"
+                  severity="secondary"
+                  outlined
+                  class="skip-btn"
+                  @click="skipBy(-5)"
+                />
+
+                <!-- Play/Pause -->
+                <Button
+                  :icon="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+                  :aria-label="isPlaying ? 'Pause' : 'Play'"
+                  rounded
+                  size="large"
+                  class="play-btn"
+                  @click="togglePlay"
+                />
+
+                <Button
+                  label="+5s"
+                  severity="secondary"
+                  outlined
+                  class="skip-btn"
+                  @click="skipBy(5)"
+                />
+                <Button
+                  label="+15s"
+                  severity="secondary"
+                  outlined
+                  class="skip-btn"
+                  @click="skipBy(15)"
+                />
+              </div>
 
               <!-- Progress Slider -->
               <div class="seek-row">
@@ -151,6 +183,7 @@ const duration = ref(0)
 const sliderValue = ref(0)
 
 const currentAudio = computed(() => store.currentAudio)
+const startOffsetSeconds = computed(() => store.startOffsetSeconds)
 
 const progressPercent = computed(() => {
   if (store.audioFiles.length === 0) return 0
@@ -188,6 +221,7 @@ function onLoadedMetadata() {
   if (currentAudio.value) {
     store.setDuration(currentAudio.value.id, audioRef.value.duration)
   }
+  applyStartOffset()
 }
 
 function onEnded() {
@@ -198,6 +232,25 @@ function onSeek(value: number | number[]) {
   if (!audioRef.value || duration.value === 0) return
   const val = Array.isArray(value) ? (value[0] ?? 0) : value
   audioRef.value.currentTime = (val / 100) * duration.value
+}
+
+function skipBy(seconds: number) {
+  if (!audioRef.value) return
+  const maxTime = duration.value > 0 ? duration.value : audioRef.value.duration || 0
+  const nextTime = audioRef.value.currentTime + seconds
+  audioRef.value.currentTime = Math.min(Math.max(nextTime, 0), maxTime)
+  currentTime.value = audioRef.value.currentTime
+  if (maxTime > 0) {
+    sliderValue.value = (audioRef.value.currentTime / maxTime) * 100
+  }
+}
+
+function applyStartOffset() {
+  if (!audioRef.value || duration.value === 0) return
+  const targetTime = Math.min(startOffsetSeconds.value, Math.max(duration.value - 0.01, 0))
+  audioRef.value.currentTime = targetTime
+  currentTime.value = targetTime
+  sliderValue.value = (targetTime / duration.value) * 100
 }
 
 function formatTime(secs: number): string {
@@ -320,6 +373,15 @@ function finishTest() {
   gap: 1rem;
 }
 
+.transport-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 .play-btn {
   width: 4rem;
   height: 4rem;
@@ -333,6 +395,10 @@ function finishTest() {
   justify-content: center;
   border-radius: 50%;
   font-size: 1.5rem;
+}
+
+.skip-btn {
+  min-width: 4.5rem;
 }
 
 .seek-row {
@@ -385,5 +451,15 @@ function finishTest() {
   justify-content: space-between;
   gap: 1rem;
   padding-bottom: 2rem;
+}
+
+@media (max-width: 560px) {
+  .transport-controls {
+    gap: 0.5rem;
+  }
+
+  .skip-btn {
+    min-width: 4rem;
+  }
 }
 </style>

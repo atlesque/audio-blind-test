@@ -131,6 +131,41 @@
         </template>
       </Card>
 
+      <!-- Step 3: Playback Options -->
+      <Card class="step-card">
+        <template #title>
+          <span class="step-title">
+            <span class="step-badge">3</span>
+            Playback Options
+          </span>
+        </template>
+        <template #content>
+          <div class="option-row">
+            <label
+              class="option-label"
+              for="start-offset"
+            >
+              Start each file from this offset (seconds)
+            </label>
+            <InputNumber
+              id="start-offset"
+              v-model="startOffsetSeconds"
+              input-class="option-input"
+              :min="0"
+              :min-fraction-digits="0"
+              :max-fraction-digits="2"
+              :step="1"
+              show-buttons
+              fluid
+            />
+          </div>
+          <p class="option-hint">
+            Use `0` to start from the beginning. If a file is shorter than the offset, playback
+            starts as close to the end as possible.
+          </p>
+        </template>
+      </Card>
+
       <!-- Start Button -->
       <div class="start-section">
         <Button
@@ -163,6 +198,7 @@ const isDragging = ref(false)
 const selectedFiles = ref<File[]>([])
 const criteria = ref<string[]>([])
 const newCriteria = ref('')
+const startOffsetSeconds = ref(0)
 
 function onDrop(event: DragEvent) {
   isDragging.value = false
@@ -209,6 +245,7 @@ function startTest() {
   if (selectedFiles.value.length === 0) return
   store.setAudioFiles(selectedFiles.value)
   store.setCriteria(criteria.value)
+  store.setStartOffset(startOffsetSeconds.value ?? 0)
   store.startTest()
   router.push('/test')
 }
@@ -258,6 +295,23 @@ function startTest() {
   font-family: 'Inter', system-ui, sans-serif;
   letter-spacing: 0.01em;
   margin: 0;
+}
+
+.option-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-label {
+  font-weight: 600;
+  color: var(--p-text-color);
+}
+
+.option-hint {
+  margin: 0.75rem 0 0;
+  color: var(--p-text-muted-color);
+  font-size: 0.95rem;
 }
 
 .step-card :deep(.p-card-title) {
