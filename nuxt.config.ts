@@ -20,6 +20,9 @@ export default defineNuxtConfig({
           href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&display=swap',
         },
       ],
+      script: [
+        { src: 'https://tools.atlesque.dev/consent.js', defer: true },
+      ],
     },
   },
   css: ['primeicons/primeicons.css', '~/assets/css/main.css'],
